@@ -4,14 +4,26 @@ import pandas as pd
 import os
 import io
 
-DATASET_URL = 'https://www.kaggle.com/datasets/bhavikjikadara/student-study-performance/download?datasetVersionNumber=1'
+DATASET_SOURCE = './Data/study_performance.csv'
 
+def load_data(path = DATASET_SOURCE) -> pd.DataFrame:
+    """
+    This function loads a dataset from a given path into a pandas DataFrame.
 
-response = requests.get(DATASET_URL)
-zip_file_in_memory = io.BytesIO(response.content)
-with zipfile.ZipFile(zip_file_in_memory, 'r') as zip_ref:
-    for filename in zip_ref.namelist():
-        if filename.endswith('.xlsx'):
-            excel_file = zip_ref.open(filename)
-            df = pd.read_excel(excel_file)
-            break
+    Parameters:
+    path (str): The path to the dataset file. By default, it uses the value of DATASET_SOURCE.
+
+    Returns:
+    pd.DataFrame: The loaded dataset as a pandas DataFrame.
+
+    Raises:
+    FileNotFoundError: If the file specified by path does not exist.
+    """
+    # Check if the file exists at the given path
+    if not os.path.exists(path):
+        # If the file does not exist, raise a FileNotFoundError
+        raise FileNotFoundError(f"File not found at {path}")
+
+    # If the file exists, load it into a pandas DataFrame and return it
+    return pd.read_csv(path)
+
