@@ -21,9 +21,30 @@ def one_hot_encode_feature(data_df: pd.DataFrame, feature: str) -> pd.DataFrame:
 
     return data_df
 
+def move_features_to_end(data_df: pd.DataFrame, feature_indices: list) -> pd.DataFrame:
+    """
+    This function moves the features specified by their indices to the right-hand side of the dataset.
+
+    Parameters:
+        data_df (pd.DataFrame): The input dataset.
+        feature_indices (list): A list of indices of the features to move to the end of the dataset.
+
+    Returns:
+        pd.DataFrame: The dataset with the specified features moved to the end.
+    """
+
+    df_out = data_df.copy()
+    early_cols = [col for col in data_df.columns if col not in feature_indices]
+    late_cols = [col for col in data_df.columns if col in feature_indices]
+    new_cols = early_cols + late_cols
+    df_out = df_out[new_cols]
+
+    return df_out
+
 if __name__ == "__main__":
     # Load the dataset
     data = pd.read_csv('Data/study_performance.csv')
     # One-hot_encode the 'gender' feature
     data = one_hot_encode_feature(data, 'gender')
+    data_reordered = move_features_to_end(data, ['math_score', 'reading_score', 'writing_score'])
 
