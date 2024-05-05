@@ -1,6 +1,24 @@
 import sklearn
 import pandas as pd
 
+def ordinal_encode_feature(data_df: pd.DataFrame, feature: str, mapping: dict) -> pd.DataFrame:
+    """
+    This function ordinal encodes a given feature in a dataset. It replaces the values in the
+    feature with the corresponding values in the mapping dictionary.
+
+    Parameters:
+    data_df (pd.DataFrame): The input dataset.
+    feature (str): The feature to ordinal encode.
+    mapping (dict): A dictionary mapping the original values to the new values.
+
+    Returns:
+    pd.DataFrame: The dataset with the ordinal encoded feature.
+    """
+
+    data_df[feature] = data_df[feature].map(mapping)
+
+    return data_df
+
 def one_hot_encode_feature(data_df: pd.DataFrame, feature: str) -> pd.DataFrame:
     """
     This function one-hot encodes a given feature in a dataset. It one_hot_encodes the
