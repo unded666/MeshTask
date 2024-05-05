@@ -1,5 +1,5 @@
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dense, Input
 
 def create_feedforward_network(input_dim: int, width: int, depth: int, output_dim: int = 1) -> Sequential:
     """
@@ -14,7 +14,7 @@ def create_feedforward_network(input_dim: int, width: int, depth: int, output_di
     model = Sequential()
 
     # Input layer
-    model.add(Dense(width, input_dim=input_dim, activation='relu'))
+    model.add(Input(shape=(input_dim,)))
 
     # Hidden layers
     for _ in range(depth):
