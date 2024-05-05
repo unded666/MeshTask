@@ -55,6 +55,22 @@ def split_data(data: np.ndarray, train_size: float = 0.7, validate_size: float =
 
     return train_data, validate_data, test_data
 
+def create_input_target(data: np.ndarray, target_index: int = -1) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Splits the data into input features and target feature. The last three columns are reserved for
+    target features, and so any that are not listed in the target index are discarded.
+
+    :param data: input data
+    :param target_index: index of the target feature
+    :return: tuple of input features and target feature
+    """
+
+    input_data = data[:, :-3]
+    target_data = data[:, target_index]
+
+    return input_data, target_data
+
+
 if __name__ == '__main__':
     """
     Debugging code here
@@ -84,6 +100,7 @@ if __name__ == '__main__':
     data_np = extract_and_shuffle(data_reordered)
     data_scaled, scaler = scale_data(data_np)
     train_data, validate_data, test_data = split_data(data_scaled)
+    train_input, train_target = create_input_target(train_data)
 
 
 
