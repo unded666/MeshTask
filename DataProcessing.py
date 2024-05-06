@@ -4,19 +4,15 @@ import sklearn.preprocessing
 from sklearn.model_selection import train_test_split
 
 
-def extract_and_shuffle(data_df: pd.DataFrame, seed : int = 42) -> np.ndarray:
+def extract_data(data_df: pd.DataFrame) -> np.ndarray:
     """
-    extracts the data from the dataframe as a numpy array, then shuffles the data along
-    the Y-axis.
+    extracts the data from the dataframe as a numpy array
 
     :param data_df: input dataframe, all cells being numeric
-    :param seed: random seed used for replicability
     :return: ndarray of shuffled data
     """
 
-    np.random.seed(seed)
     data = data_df.to_numpy()
-    np.random.shuffle(data)
 
     return data
 
